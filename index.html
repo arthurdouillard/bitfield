@@ -1,0 +1,106 @@
+<div>
+    <input type="checkbox" id="use1" name="config1" checked>
+    <input type="number" id="modulo_val1" name="modulo value" min="1" , value="9">
+    <input type="text" id="foreground_color_val1" name="foreground color value" min="1" , value="black">
+    <input type="text" id="background_color_val1" name="background color value" min="1" , value="white">
+    <select name="Bitwise Operator" id="operator_val1">
+        <option value="">--Please choose an option--</option>
+        <option value="and">AND</option>
+        <option value="or">OR</option>
+        <option selected="selected" value="xor">XOR</option>
+    </select>
+</div>
+
+<div>
+    <input type="checkbox" id="use2" name="config2">
+    <input type="number" id="modulo_val2" name="modulo value" min="1" , value="9">
+    <input type="text" id="foreground_color_val2" name="foreground color value" min="1" , value="black">
+    <input type="text" id="background_color_val2" name="background color value" min="1" , value="white">
+    <select name="Bitwise Operator" id="operator_val2">
+        <option value="">--Please choose an option--</option>
+        <option value="and">AND</option>
+        <option value="or">OR</option>
+        <option selected="selected" value="xor">XOR</option>
+    </select>
+</div>
+
+<div>
+    <input type="checkbox" id="use3" name="config2">
+    <input type="number" id="modulo_val3" name="modulo value" min="1" , value="9">
+    <input type="text" id="foreground_color_val3" name="foreground color value" min="1" , value="black">
+    <input type="text" id="background_color_val3" name="background color value" min="1" , value="white">
+    <select name="Bitwise Operator" id="operator_val3">
+        <option value="">--Please choose an option--</option>
+        <option value="and">AND</option>
+        <option value="or">OR</option>
+        <option selected="selected" value="xor">XOR</option>
+    </select>
+</div>
+
+
+<br><br><br><br>
+
+<canvas id="c" width="1024" height="1024">
+    <script>
+        function draw(modulo, fg_color, operator) {
+            const context = c.getContext('2d');
+            context.fillStyle = fg_color;
+
+            for (let x = 0; x < 256; x++) {
+                for (let y = 0; y < 256; y++) {
+                    if (operator == "and") {
+                        if ((x & y) % modulo) {
+                            context.fillRect(x * 4, y * 4, 4, 4);
+                        }
+                    }
+                    else if (operator == "or") {
+                        if ((x | y) % modulo) {
+                            context.fillRect(x * 4, y * 4, 4, 4);
+                        }
+                    }
+                    else if (operator == "xor") {
+                        if ((x ^ y) % modulo) {
+                            context.fillRect(x * 4, y * 4, 4, 4);
+                        }
+                    }
+                }
+            }
+        };
+
+        function fetchValues() {
+            let values = [];
+            for (let i = 1; i < 4; i++) {
+                if (document.getElementById("use" + i).checked) {
+                    values.push({
+                        modulo: document.getElementById("modulo_val" + i).value,
+                        operator: document.getElementById("operator_val" + i).value,
+                        fg_color: document.getElementById("foreground_color_val" + i).value,
+                        bg_color: document.getElementById("background_color_val" + i).value,
+                    });
+                }
+            }
+            return values;
+        }
+
+        function launch_draw() {
+            let values = fetchValues();
+            if (values.length == 0) {
+                return
+            }
+
+            const context = c.getContext('2d');
+            context.fillStyle = values[0].bg_color;
+            context.fillRect(0, 0, c.width, c.height);
+
+            values.forEach(val => draw(val.modulo, val.fg_color, val.operator));
+        }
+
+
+        [
+            "use1", "modulo_val1", "foreground_color_val1", "background_color_val1", "operator_val1",
+            "use2", "modulo_val2", "foreground_color_val2", "background_color_val2", "operator_val2",
+            "use3", "modulo_val3", "foreground_color_val3", "background_color_val3", "operator_val3"
+        ].forEach(id => document.getElementById(id).addEventListener("change", launch_draw));
+
+        launch_draw();
+    </script>
