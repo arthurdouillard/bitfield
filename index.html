@@ -1,8 +1,14 @@
+<h1>Bitfield generator</h1>
+<p>For each pixel, given its coordinates x and y, do (x OP y) % MODULO, with OP being the bitwise operation XOR ^, AND
+    &, or OR |</p>
+<p>Parameter order are MODULO, FOREGROUND_COLOR, BACKGROUND_COLOR, OPERATOR. Only the first checked background color is
+    used.</p>
+
 <div>
     <input type="checkbox" id="use1" name="config1" checked>
     <input type="number" id="modulo_val1" name="modulo value" min="1" , value="9">
-    <input type="text" id="foreground_color_val1" name="foreground color value" min="1" , value="black">
-    <input type="text" id="background_color_val1" name="background color value" min="1" , value="white">
+    <input type="text" id="foreground_color_val1" name="foreground color value" min="1" , value="darkblue">
+    <input type="text" id="background_color_val1" name="background color value" min="1" , value="yellow">
     <select name="Bitwise Operator" id="operator_val1">
         <option value="">--Please choose an option--</option>
         <option value="and">AND</option>
@@ -12,10 +18,10 @@
 </div>
 
 <div>
-    <input type="checkbox" id="use2" name="config2">
-    <input type="number" id="modulo_val2" name="modulo value" min="1" , value="9">
-    <input type="text" id="foreground_color_val2" name="foreground color value" min="1" , value="black">
-    <input type="text" id="background_color_val2" name="background color value" min="1" , value="white">
+    <input type="checkbox" id="use2" name="config2" checked>
+    <input type="number" id="modulo_val2" name="modulo value" min="1" , value="3">
+    <input type="text" id="foreground_color_val2" name="foreground color value" min="1" , value="darkred">
+    <input type="text" id="background_color_val2" name="background color value" min="1" , value="yellow">
     <select name="Bitwise Operator" id="operator_val2">
         <option value="">--Please choose an option--</option>
         <option value="and">AND</option>
@@ -38,9 +44,10 @@
 </div>
 
 
-<br><br><br><br>
+<br>
 
 <canvas id="c" width="1024" height="1024">
+
     <script>
         function draw(modulo, fg_color, operator) {
             const context = c.getContext('2d');
